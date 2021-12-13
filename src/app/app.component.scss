@@ -1,0 +1,115 @@
+$frameSpread: 50px;
+$shadowVOffset: 10px;
+
+@mixin preventMarginCollapsing {
+  border: dotted transparent 1px;
+  box-sizing: border-box;
+}
+
+@mixin frame($border-top: true) {
+  height: 100px;
+  background: var(--frame-background-color);
+  $localShadowVOffset: $shadowVOffset;
+  @if $border-top == true {
+    border-bottom: inset white 2px;
+    $localShadowVOffset: -$localShadowVOffset;
+  }
+  @else {
+    border-top: inset white 2px;
+  }
+  box-shadow: 0 $localShadowVOffset $frameSpread 15px var(--frame-shadow-color);
+}
+
+.container {
+  display: flex;
+  align-items: stretch;
+  align-content: stretch;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  height: max-content;
+  overflow: auto;
+
+  header, main, footer {
+    @include preventMarginCollapsing;
+  }
+
+  header {
+    @include frame;
+    > h1 {
+      text-align: center;
+      color: var(--header-text-color);
+      font-family: "Arial Black", sans-serif;
+    }
+  }
+
+  main {
+    flex: 1;
+    margin: $frameSpread;
+    color: var(--main-text-color);
+    font-size: var(--main-font-size);
+
+    p {
+      font-size: var(--title-font-size);
+    }
+
+    .block {
+      margin: 25px;
+    }
+
+    form {
+      margin: 15px;
+
+      input {
+        margin-right: 5px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px 0 inset var(--input-inset-shadow-color);
+      }
+    }
+  }
+
+  footer {
+    @include frame(false);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    span {
+      font-family: "Times New Roman", sans-serif;
+      font-size: var(--footer-font-size);
+      color: var(--footer-text-color);
+      margin: 10px;
+
+      &:first-of-type {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.cube {
+  min-height: 100px;
+  min-width: 100px;
+  background-color: aqua;
+  border-radius: 8px;
+  border: solid 5px aliceblue;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--add {
+    background-color: dimgrey;
+    cursor: pointer;
+  }
+
+  span {
+    color: black;
+    font-weight: bolder;
+  }
+}
+
+.base-grid {
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+}
